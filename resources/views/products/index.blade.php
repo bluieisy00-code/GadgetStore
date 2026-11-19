@@ -13,14 +13,37 @@
 <button class="btn btn-outline-primary">Cari / Filter</button>
 </form>
 <table class="table">
-<thead><tr><th>Kode</th><th>Produk</th><th>Kategori</th><th>Merek</th><th>Harga</th><th>Stok</th><th>Aksi</th></tr></thead>
+<thead>
+    <tr>
+        <th>Gambar</th>
+        <th>Kode</th>
+        <th>Produk</th>
+        <th>Kategori</th>
+        <th>Merek</th>
+        <th>Harga</th>
+        <th>Stok</th>
+        <th>Aksi</th>
+    </tr>
+</thead>
 <tbody>
 @forelse($products as $product)
 <tr>
-<td>{{ $product->product_code }}</td><td>{{ $product->name }}</td>
-<td>{{ $product->category->name }}</td><td>{{ $product->brand }}</td>
-<td>Rp {{ number_format((float)$product->price,0,',','.') }}</td><td>{{ $product->stock }}</td>
-<td><a href="{{ route('products.edit',$product) }}">Edit</a>
+    <td>
+        @if($product->image)
+            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="rounded" style="width: 48px; height: 48px; object-fit: cover;">
+        @else
+            <div class="bg-light text-secondary rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; font-size: 11px;">
+                No Img
+            </div>
+        @endif
+    </td>
+    <td>{{ $product->product_code }}</td>
+    <td>{{ $product->name }}</td>
+    <td>{{ $product->category->name }}</td>
+    <td>{{ $product->brand }}</td>
+    <td>Rp {{ number_format((float)$product->price,0,',','.') }}</td>
+    <td>{{ $product->stock }}</td>
+    <td><a href="{{ route('products.edit',$product) }}">Edit</a>
 <form method="POST" action="{{ route('products.destroy',$product) }}">
 @csrf @method('DELETE')<button>Hapus</button></form></td>
 </tr>
