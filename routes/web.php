@@ -29,4 +29,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('categories', CategoryController::class)->except('index');
 });
 
+// Monitoring Stok BLUEWAVE STATIONERY
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/stocks', [
+        \App\Http\Controllers\StockController::class,
+        'index'
+    ])->name('stocks.index');
+});
+
+// Laporan Inventaris BLUEWAVE STATIONERY
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/reports', [
+        \App\Http\Controllers\ReportController::class,
+        'index'
+    ])->name('reports.index');
+});
 
